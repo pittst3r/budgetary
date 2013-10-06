@@ -1,0 +1,234 @@
+/*/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+
+  Table of contents
+
+ -1. Reset
+  0. Variables and mixins
+    0.1 Color aliases
+    0.2 Element colors
+    0.3 Type
+    0.4 Dimensions
+  1. Base
+  2. Layout
+  3. Modules
+  4. State
+
+\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/*/
+
+
+/*/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+ -1. Reset
+\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/*/
+
+ul, ol {
+  list-style: none;
+}
+
+h1, h2, h3, h4, h5, h6, pre, code {
+  font-size: 1em;
+}
+
+ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, body, html, p, blockquote, fieldset, input, dl, dt, dd, figure, figcaption {
+  margin: 0;
+  padding: 0;
+}
+
+a img, :link img, :visited img, fieldset {
+  border: none;
+}
+
+address {
+  font-style: normal;
+}
+
+header, section, article, nav, footer, hgroup, details, summary, figure {
+  display: block;
+}
+
+mark {
+  color: inherit;
+  background: transparent;
+}
+
+abbr {
+  border: none;
+}
+
+/*/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+  0. Variables and mixins
+\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/*/
+
+/*/\/\
+  0.1. Color aliases
+\/\/*/
+@medium-grey: #eee;
+@light-grey: #fafafa;
+@dark-blue: #292e43;
+@medium-blue: #526181;
+@sky-blue: #427791;
+@red: #bc5a5e;
+
+/*/\/\
+  0.2. Element colors
+\/\/*/
+
+@background: @medium-grey;
+@copy-color: @medium-blue;
+
+/*/\/\
+  0.3. Type
+\/\/*/
+
+@font-family-normal: Proxima Nova, Helvetica Neue, Helvetica, Arial, sans-serif;
+
+/*/\/\
+  0.4. Dimensions
+\/\/*/
+
+@transition-speed: 0.4s;
+
+
+/*/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+  1. Base
+\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/*/
+
+body {
+  font-family: @font-family-normal;
+  background-color: @background;
+}
+
+h1, h2, h3, h4, h5,
+p, ul, ol, dl,
+table, th, td,
+legend, label {
+  color: @copy-color;
+}
+
+a {
+  color: @copy-color;
+  text-decoration: none;
+  transition: color @transition-speed;
+  &:hover {
+    color: @sky-blue;
+  }
+}
+
+
+/*/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+  2. Layout
+\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/*/
+
+h1 {
+  margin: 0 0 2em;
+  padding: .5em 0;
+  font-size: 1.5em;
+  color: @red;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  background: @light-grey;
+}
+
+table.budget {
+  width: 100%;
+  border-collapse: collapse;
+  cursor: default;
+  td, th {
+    padding: .5em 1%;
+    font-size: .8em;
+    letter-spacing: .2em;
+    border: 1px solid @light-grey;
+    border-width: 1px 0;
+  }
+  thead {
+    &:after {
+      content: "";
+      display: block;
+      height: 1em;
+    }
+    th {
+      font-size: .6em;
+      font-weight: normal;
+      text-transform: uppercase;
+      text-align: left;
+    }
+  }
+  tbody {
+    cursor: pointer;
+    tr {
+      td {
+        transition: color @transition-speed;
+      }
+      &:hover {
+        td {
+          color: lighten(@copy-color, 20%);
+        }
+      }
+    }
+  }
+  tfoot {
+    &:before {
+      content: "";
+      display: block;
+      height: 1em;
+    }
+  }
+  .type {
+    width: 20%;
+    text-align: right;
+  }
+  .name {
+
+  }
+  .amount {
+    width: 15%;
+  }
+  td.amount {
+    text-align: right;
+    &:before {
+      content: "$";
+      float: left;
+    }
+  }
+  .proportion {
+    width: 20%;
+  }
+  td.proportion {
+    &:after {
+      content: "%";
+    }
+  }
+  .new {
+    padding: 0;
+    font-size: .6em;
+    border: none;
+    text-align: center;
+    text-transform: uppercase;
+    a {
+      display: block;
+      padding: .5em 1%;
+      transition: background-color @transition-speed;
+      &:hover {
+        background: lighten(@background, 4%);
+      }
+    }
+  }
+  .total {
+    text-transform: uppercase;
+    text-align: right;
+  }
+}
+
+
+/*/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+  0. Modules
+\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/*/
+
+
+
+
+/*/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+  0. State
+\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/*/
+
+

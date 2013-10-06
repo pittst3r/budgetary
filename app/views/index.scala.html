@@ -1,7 +1,48 @@
-@(message: String)
+@(heading: String)
 
-@main("Welcome to Play") {
+@main("Budgetary") {
 
-    @play20.welcome(message)
+  <h1>@heading</h1>
+
+  <table class="budget">
+    <thead>
+      <tr>
+        <th class="type">Type</th>
+        <th class="name">Name</th>
+        <th class="amount">Amount</th>
+        <th class="proportion">Proportion</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="type">Normal</td>
+        <td class="name">Tithe</td>
+        <td class="amount">500.00</td>
+        <td class="proportion">10</td>
+      </tr>
+      <tr>
+        <td class="type">Rollover</td>
+        <td class="name">Tithe</td>
+        <td class="amount">500.00</td>
+        <td class="proportion">10</td>
+      </tr>
+      <tr>
+        <td class="type">Savings</td>
+        <td class="name">Tithe</td>
+        <td class="amount">500.00</td>
+        <td class="proportion">10</td>
+      </tr>
+      <tr>
+        <td class="new" colspan="4"><a href="#">New Budget</a></td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td class="total" colspan="2">Total</td>
+        <td class="amount">1500.00</td>
+        <td class="proportion">30</td>
+      </tr>
+    </tfoot>
+  </table>
 
 }
