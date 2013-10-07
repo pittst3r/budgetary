@@ -72,8 +72,9 @@ abbr {
   0.2. Element colors
 \/\/*/
 
-@background: @medium-grey;
-@copy-color: @medium-blue;
+@primary-color: @medium-grey;
+@secondary-color: @light-grey;
+@copy: @medium-blue;
 
 /*/\/\
   0.3. Type
@@ -94,22 +95,22 @@ abbr {
 
 body {
   font-family: @font-family-normal;
-  background-color: @background;
+  background-color: @secondary-color;
 }
 
 h1, h2, h3, h4, h5,
 p, ul, ol, dl,
 table, th, td,
 legend, label {
-  color: @copy-color;
+  color: @copy;
 }
 
 a {
-  color: @copy-color;
+  color: @copy;
   text-decoration: none;
   transition: color @transition-speed;
   &:hover {
-    color: @sky-blue;
+    color: @red;
   }
 }
 
@@ -122,11 +123,11 @@ h1 {
   margin: 0 0 2em;
   padding: .5em 0;
   font-size: 1.5em;
-  color: @red;
+  color: @dark-blue;
   text-align: center;
   text-transform: uppercase;
   letter-spacing: .1em;
-  background: @light-grey;
+  background: @primary-color;
 }
 
 table.budget {
@@ -161,7 +162,7 @@ table.budget {
       }
       &:hover {
         td {
-          color: lighten(@copy-color, 20%);
+          color: lighten(@copy, 20%);
         }
       }
     }
@@ -201,15 +202,16 @@ table.budget {
   .new {
     padding: 0;
     font-size: .6em;
-    border: none;
     text-align: center;
     text-transform: uppercase;
+    background: lighten(@secondary-color, 4%);
+    border: none;
     a {
       display: block;
       padding: .5em 1%;
-      transition: background-color @transition-speed;
+      transition: color @transition-speed;
       &:hover {
-        background: lighten(@background, 4%);
+        color: @red;
       }
     }
   }

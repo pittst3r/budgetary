@@ -1,0 +1,19 @@
+@(budgetForm: Form[Budget])
+
+@import helper._
+
+@main("Budgetary") {
+
+  <h2>New Budget</h2>
+
+  @form(routes.Budgets.createBudget) {
+
+    @inputText(budgetForm("name"))
+
+    @inputText(budgetForm("amount"), '_showConstraints -> false)
+
+    <input type="submit" value="Create Budget" />
+
+  }
+
+}

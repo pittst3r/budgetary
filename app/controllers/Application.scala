@@ -5,8 +5,10 @@ import play.api.mvc._
 
 object Application extends Controller {
 
+  implicit val title = "Budgetary"
+
   def index = Action {
-    Ok(views.html.index("Budgetarium"))
+    Redirect(routes.Budgets.index)
   }
 
 }

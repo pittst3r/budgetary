@@ -1,0 +1,36 @@
+@(budgets: List[Budget])
+
+@main() {
+
+  <table class="budget">
+    <thead>
+      <tr>
+        <th class="type">Type</th>
+        <th class="name">Name</th>
+        <th class="amount">Amount</th>
+        <th class="proportion">Proportion</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for(b <- budgets) {
+      <tr>
+        <td class="type">Asdf</td>
+        <td class="name">@b.name</td>
+        <td class="amount">@b.amount</td>
+        <td class="proportion">10</td>
+      </tr>
+      }
+      <tr>
+        <td class="new" colspan="4"><a href="@routes.Budgets.newBudget">New Budget</a></td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td class="total" colspan="2">Total</td>
+        <td class="amount">1500.00</td>
+        <td class="proportion">30</td>
+      </tr>
+    </tfoot>
+  </table>
+
+}
