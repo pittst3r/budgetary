@@ -11,7 +11,6 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 GET     /budgets                    controllers.Budgets.index
 GET     /budgets/new                controllers.Budgets.newBudget
 POST    /budgets/create             controllers.Budgets.createBudget
-GET     /budgets/:id                controllers.Budgets.showBudget(id: Long)
 GET     /budgets/:id/edit           controllers.Budgets.editBudget(id: Long)
 PUT     /budgets/:id                controllers.Budgets.updateBudget(id: Long)
 DELETE  /budgets/:id/destroy        controllers.Budgets.destroyBudget(id: Long)

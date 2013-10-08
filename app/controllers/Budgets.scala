@@ -6,11 +6,21 @@ import play.api.data._
 import play.api.data.Forms._
 import play.api.data.format.Formats._
 import models.Budget
+import anorm.{Pk, NotAssigned}
 
 object Budgets extends Controller {
 
+  val budgetForm = Form(
+    mapping(
+      "id" -> ignored(NotAssigned: Pk[Long]),
+      "name" -> of[String],
+      "amount" -> of[Double]
+    )(Budget.apply)(Budget.unapply)
+  )
+
   def index = Action {
-    Ok(views.html.Budgets.index(Budget.all()))
+    val budgets = Budget.all()
+    Ok(views.html.Budgets.index(budgets, totalOfBudgets(budgets)))
   }
 
   def newBudget = Action {
@@ -24,26 +34,22 @@ object Budgets extends Controller {
         BadRequest(views.html.Budgets.newBudget(errors))
       },
       budget => {
-        Budget.create(budget.name, budget.amount)
+        Budget.create(budget)
         Redirect(routes.Budgets.index)
       }
     )
 
   }
 
-  def showBudget(id: Long) = TODO
-
-  def editBudget(id: Long) = TODO
+  def editBudget(id: Long) = Action {
+    val budget = Budget.findById(id).get
+    Ok(views.html.Budgets.editBudget(budget, budgetForm))
+  }
 
   def updateBudget(id: Long) = TODO
 
   def destroyBudget(id: Long) = TODO
 
-  val budgetForm = Form(
-    mapping(
-      "name" -> of[String],
-      "amount" -> of[Double]
-    )(Budget.apply)(Budget.unapply)
-  )
+  def totalOfBudgets(budgets: List[Budget]) = budgets.foldLeft(0.toDouble)((a, b) => a + b.amount)
 
 }

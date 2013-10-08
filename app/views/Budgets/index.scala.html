@@ -1,11 +1,12 @@
-@(budgets: List[Budget])
+@(budgets: List[Budget], budgetTotal: Double)
+
+@import models.Budget._
 
 @main() {
 
   <table class="budget">
     <thead>
       <tr>
-        <th class="type">Type</th>
         <th class="name">Name</th>
         <th class="amount">Amount</th>
         <th class="proportion">Proportion</th>
@@ -14,10 +15,12 @@
     <tbody>
       @for(b <- budgets) {
       <tr>
-        <td class="type">Asdf</td>
-        <td class="name">@b.name</td>
-        <td class="amount">@b.amount</td>
-        <td class="proportion">10</td>
+        <td class="name">
+          @b.name
+          <a href="@routes.Budgets.editBudget(b.id.get)" class="edit">edit</a>
+        </td>
+        <td class="amount">@amountInCurrency(b.amount)</td>
+        <td class="proportion">@("%1.0f".format(b.amount / budgetTotal * 100))</td>
       </tr>
       }
       <tr>
@@ -26,9 +29,9 @@
     </tbody>
     <tfoot>
       <tr>
-        <td class="total" colspan="2">Total</td>
-        <td class="amount">1500.00</td>
-        <td class="proportion">30</td>
+        <td class="total">Total</td>
+        <td class="amount">@amountInCurrency(budgetTotal)</td>
+        <td class="proportion">100</td>
       </tr>
     </tfoot>
   </table>
