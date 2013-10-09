@@ -4,16 +4,16 @@
 
 @main("Budgetary") {
 
-<h2>Edit Budget</h2>
+  <h2>Edit Budget</h2>
 
-@form(routes.Budgets.updateBudget(budget.id.get)) {
+  @form(routes.Budgets.updateBudget(budget.id.get)) {
 
-@inputText(budgetForm("name"))
+    @inputText(budgetForm("name"))
 
-@inputText(budgetForm("amount"), '_showConstraints -> false)
+    @inputText(budgetForm("amount"), '_showConstraints -> false)
 
-<input type="submit" value="Update Budget" />
+    <input type="submit" value="Update Budget" />
 
-}
+  }
 
 }

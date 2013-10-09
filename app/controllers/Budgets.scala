@@ -46,7 +46,21 @@ object Budgets extends Controller {
     Ok(views.html.Budgets.editBudget(budget, budgetForm))
   }
 
-  def updateBudget(id: Long) = TODO
+  def updateBudget(id: Long) = Action { implicit request =>
+
+    val budget = Budget.findById(id).get
+
+    budgetForm.bindFromRequest.fold(
+      errors => {
+        BadRequest(views.html.Budgets.editBudget(budget, errors))
+      },
+      budget => {
+        Budget.update(id, budget)
+        Redirect(routes.Budgets.index)
+      }
+    )
+
+  }
 
   def destroyBudget(id: Long) = TODO
 

@@ -36,7 +36,15 @@ object Budget {
     }
   }
 
-  def update(budget: Budget) {}
+  def update(id: Long, budget: Budget) {
+    DB.withConnection { implicit c =>
+      SQL("UPDATE budgets SET name = {name}, amount = {amount} WHERE id = {id}").on(
+        'id -> id,
+        'name -> budget.name,
+        'amount -> budget.amount
+      ).executeUpdate()
+    }
+  }
 
   def delete(budget: Budget) {}
 

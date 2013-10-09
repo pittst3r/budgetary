@@ -12,5 +12,5 @@ GET     /budgets                    controllers.Budgets.index
 GET     /budgets/new                controllers.Budgets.newBudget
 POST    /budgets/create             controllers.Budgets.createBudget
 GET     /budgets/:id/edit           controllers.Budgets.editBudget(id: Long)
-PUT     /budgets/:id                controllers.Budgets.updateBudget(id: Long)
+POST    /budgets/:id                controllers.Budgets.updateBudget(id: Long)
 DELETE  /budgets/:id/destroy        controllers.Budgets.destroyBudget(id: Long)
