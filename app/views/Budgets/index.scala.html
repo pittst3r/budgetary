@@ -17,7 +17,8 @@
       <tr>
         <td class="name">
           @b.name
-          <a href="@routes.Budgets.editBudget(b.id.get)" class="edit">edit</a>
+          <a href="@routes.Budgets.editBudget(b.id.get)" class="edit button">edit</a>
+          <a href="@routes.Budgets.index" class="delete button" data-id="@b.id.get">delete</a>
         </td>
         <td class="amount">@amountInCurrency(b.amount)</td>
         <td class="proportion">@("%1.0f".format(b.amount / budgetTotal * 100))</td>

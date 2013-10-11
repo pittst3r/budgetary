@@ -43,7 +43,7 @@ object Budgets extends Controller {
 
   def editBudget(id: Long) = Action {
     val budget = Budget.findById(id).get
-    Ok(views.html.Budgets.editBudget(budget, budgetForm))
+    Ok(views.html.Budgets.editBudget(budget, budgetForm.fill(budget)))
   }
 
   def updateBudget(id: Long) = Action { implicit request =>
@@ -62,7 +62,14 @@ object Budgets extends Controller {
 
   }
 
-  def destroyBudget(id: Long) = TODO
+  def destroyBudget(id: Long) = Action { implicit request =>
+
+    Budget.destroy(id) match {
+      case None => BadRequest
+      case Some(budget) => Ok(routes.Budgets.index.toString())
+    }
+
+  }
 
   def totalOfBudgets(budgets: List[Budget]) = budgets.foldLeft(0.toDouble)((a, b) => a + b.amount)
 

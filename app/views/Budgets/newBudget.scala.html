@@ -1,19 +1,26 @@
 @(budgetForm: Form[Budget])
 
 @import helper._
+@import FormHelpers._
 
-@main("Budgetary") {
+@implicitFieldConstructor = @{ FieldConstructor(myFieldConstructor.f) }
 
-  <h2>New Budget</h2>
+@main() {
 
-  @form(routes.Budgets.createBudget) {
+  <section class="content">
 
-    @inputText(budgetForm("name"))
+    <h2>New Budget</h2>
 
-    @inputText(budgetForm("amount"), '_showConstraints -> false)
+    @form(routes.Budgets.createBudget) {
 
-    <input type="submit" value="Create Budget" />
+      @inputText(budgetForm("name"))
 
-  }
+      @inputText(budgetForm("amount"), args = '_type -> "number")
+
+      <input type="submit" value="Create Budget" />
+
+    }
+
+  </section>
 
 }

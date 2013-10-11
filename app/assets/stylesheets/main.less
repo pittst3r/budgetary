@@ -105,6 +105,7 @@ p, ul, ol, dl,
 table, th, td,
 legend, label {
   color: @copy;
+  font-weight: normal;
 }
 
 a {
@@ -116,20 +117,90 @@ a {
   }
 }
 
+h2 {
+  margin: 2em 0;
+  font-size: 1.2em;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  font-weight: bold;
+  border-bottom: 1px solid @primary-color;
+}
+
+label {
+  display: block;
+  width: 40%;
+  margin: 1em auto;
+  font-size: .8em;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+}
+
+input {
+  box-sizing: border-box;
+  width: 100%;
+  font-family: @font-family-normal;
+  font-size: 1em;
+  color: @copy;
+  -webkit-appearance: none;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="number"],
+input[type="password"] {
+  margin: .5em 0 0;
+  padding: .5em;
+  border: 1px solid @primary-color;
+}
+
+input[type="submit"],
+button {
+  display: block;
+  width: 40%;
+  margin: 1em auto;
+  padding: .4em .6em;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  font-weight: bold;
+  background: @copy-light;
+  border: none;
+  cursor: pointer;
+  transition: all @transition-speed;
+}
+
 
 /*/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
   2. Layout
 \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/*/
 
-h1 {
+header {
   margin: 0 0 2em;
-  padding: .5em 0;
-  font-size: 1.5em;
+  padding: .4em 0 .4em 20%;
   color: @dark-blue;
-  text-align: center;
   text-transform: uppercase;
   letter-spacing: .1em;
   background: @primary-color;
+  h1 {
+    display: inline-block;
+    margin-right: 2em;
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: default;
+  }
+  nav {
+    font-size: .6em;
+    line-height: (1em / .6em);
+    vertical-align: middle;
+    ul {
+      li {
+        display: inline-block;
+        margin-right: 1em;
+        a {
+          color: @copy-light;
+        }
+      }
+    }
+  }
 }
 
 table.budget {
@@ -160,7 +231,8 @@ table.budget {
     tr {
       &:hover {
         td {
-          a.edit {
+          a.edit,
+          a.delete {
             opacity: 1;
           }
         }
@@ -198,15 +270,12 @@ table.budget {
       margin-left: .2em;
     }
   }
-  a.edit {
-    display: inline-block;
+  a.edit,
+  a.delete {
     position: relative;
     top: -.1em;
     left: 1em;
-    padding: .3em;
     font-size: .6em;
-    text-transform: uppercase;
-    background: @primary-color;
     opacity: 0;
     transition: all @transition-speed;
   }
@@ -215,7 +284,6 @@ table.budget {
     font-size: .6em;
     text-align: center;
     text-transform: uppercase;
-    background: @white-grey;
     border: none;
     a {
       display: block;
@@ -232,12 +300,21 @@ table.budget {
   }
 }
 
+section.content {
+  margin: 0 20%;
+}
+
 
 /*/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
   0. Modules
 \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/*/
 
-
+.button {
+  display: inline-block;
+  padding: .3em;
+  text-transform: uppercase;
+  background: @primary-color;
+}
 
 
 /*/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\

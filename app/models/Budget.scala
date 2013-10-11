@@ -17,18 +17,18 @@ object Budget {
     }
   }
 
-  def all(): List[Budget] = DB.withConnection { implicit c =>
+  def all(): List[Budget] = DB.withConnection { implicit connection =>
     SQL("SELECT * FROM budgets").as(budgetParser *)
   }
 
-  def findById(id: Long): Option[Budget] = DB.withConnection { implicit c =>
+  def findById(id: Long): Option[Budget] = DB.withConnection { implicit connection =>
     SQL("SELECT * FROM budgets WHERE id = {id}").on(
       'id -> id
     ).as(budgetParser.singleOpt)
   }
 
   def create(budget: Budget) {
-    DB.withConnection { implicit c =>
+    DB.withConnection { implicit connection =>
       SQL("INSERT INTO budgets (name, amount) VALUES ({name}, {amount})").on(
         'name -> budget.name,
         'amount -> budget.amount
@@ -37,7 +37,7 @@ object Budget {
   }
 
   def update(id: Long, budget: Budget) {
-    DB.withConnection { implicit c =>
+    DB.withConnection { implicit connection =>
       SQL("UPDATE budgets SET name = {name}, amount = {amount} WHERE id = {id}").on(
         'id -> id,
         'name -> budget.name,
@@ -46,7 +46,15 @@ object Budget {
     }
   }
 
-  def delete(budget: Budget) {}
+  def destroy(id: Long): Option[Budget] = {
+    val budget = Budget.findById(id)
+    DB.withConnection { implicit connection =>
+      SQL("DELETE FROM budgets WHERE id = {id}").on('id -> id).executeUpdate()
+    } match {
+      case 0 => None
+      case 1 => budget
+    }
+  }
 
   def amountInCurrency(amount: Double): String = "%.2f".format(amount)
 
