@@ -7,14 +7,16 @@ import play.api.data.Forms._
 import play.api.data.format.Formats._
 import models.Budget
 import anorm.{Pk, NotAssigned}
+import play.api.data.format.Formats._
 
 object Budgets extends Controller {
 
   val budgetForm = Form(
     mapping(
       "id" -> ignored(NotAssigned: Pk[Long]),
-      "name" -> of[String],
-      "amount" -> of[Double]
+      "name" -> nonEmptyText,
+      "amount" -> of[Double],
+      "category_id" -> optional[Long](of[Long])
     )(Budget.apply)(Budget.unapply)
   )
 
@@ -66,7 +68,7 @@ object Budgets extends Controller {
 
     Budget.destroy(id) match {
       case None => BadRequest
-      case Some(budget) => Ok(routes.Budgets.index.toString())
+      case Some(budget) => Ok
     }
 
   }

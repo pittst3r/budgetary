@@ -5,15 +5,16 @@ import anorm.SqlParser._
 import play.api.db._
 import play.api.Play.current
 
-case class Budget(id: Pk[Long], name: String, amount: Double)
+case class Budget(id: Pk[Long], name: String, amount: Double, category_id: Option[Long])
 
 object Budget {
 
   val budgetParser = {
     get[Pk[Long]]("id") ~
     get[String]("name") ~
-    get[Double]("amount") map {
-      case id~name~amount => Budget(id, name, amount)
+    get[Double]("amount") ~
+    get[Option[Long]]("category_id") map {
+      case id~name~amount~category_id => Budget(id, name, amount, category_id)
     }
   }
 
@@ -29,19 +30,21 @@ object Budget {
 
   def create(budget: Budget) {
     DB.withConnection { implicit connection =>
-      SQL("INSERT INTO budgets (name, amount) VALUES ({name}, {amount})").on(
+      SQL("INSERT INTO budgets (name, amount, category_id) VALUES ({name}, {amount}, {category_id})").on(
         'name -> budget.name,
-        'amount -> budget.amount
+        'amount -> budget.amount,
+        'category_id -> budget.category_id
       ).executeUpdate()
     }
   }
 
   def update(id: Long, budget: Budget) {
     DB.withConnection { implicit connection =>
-      SQL("UPDATE budgets SET name = {name}, amount = {amount} WHERE id = {id}").on(
+      SQL("UPDATE budgets SET name = {name}, amount = {amount}, category_id = {category_id} WHERE id = {id}").on(
         'id -> id,
         'name -> budget.name,
-        'amount -> budget.amount
+        'amount -> budget.amount,
+        'category_id -> budget.category_id
       ).executeUpdate()
     }
   }
