@@ -4,6 +4,11 @@
 
 @main() {
 
+  <div id="new">
+    <a href="@routes.Budgets.newBudget">New Budget</a>
+    <a href="@routes.Categories.newCategory">New Category</a>
+  </div>
+
   <table class="budget">
     <thead>
       <tr>
@@ -45,9 +50,6 @@
           </tr>
         }
       }
-      <tr>
-        <td class="new" colspan="4"><a href="@routes.Budgets.newBudget">New Budget</a> <a href="@routes.Categories.newCategory">New Category</a></td>
-      </tr>
     </tbody>
     <tfoot>
       <tr>
