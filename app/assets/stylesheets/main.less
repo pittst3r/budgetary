@@ -63,7 +63,7 @@ abbr {
 \/\/*/
 @medium-grey: #eee;
 @light-grey: #fafafa;
-@white-grey: lighten(@secondary-color, 4%);
+@white-grey: lighten(@light-grey, 4%);
 @dark-blue: #292e43;
 @medium-blue: #526181;
 @light-blue: lighten(@medium-blue, 20%);
@@ -135,21 +135,25 @@ label {
   letter-spacing: .1em;
 }
 
-input {
+input,
+select {
+  display: block;
   box-sizing: border-box;
   width: 100%;
   font-family: @font-family-normal;
   font-size: 1em;
   color: @copy;
+  border-radius: 0;
   -webkit-appearance: none;
 }
 
 input[type="text"],
 input[type="email"],
 input[type="number"],
-input[type="password"] {
+input[type="password"],
+select {
   margin: .5em 0 0;
-  padding: .5em;
+  padding: .5em .6em;
   border: 1px solid @primary-color;
 }
 
@@ -246,13 +250,19 @@ table.budget {
       height: 1em;
     }
   }
+  .category {
+    width: 60%;
+    padding: .5em 20%;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    border-top: none;
+  }
   .name {
     padding-left: 20%;
   }
   .amount {
     width: 10%;
-  }
-  td.amount {
     text-align: right;
     &:before {
       content: "$";
@@ -260,11 +270,9 @@ table.budget {
     }
   }
   .proportion {
-    width: 30%;
+    width: 10%;
     padding-right: 20%;
     text-align: right;
-  }
-  td.proportion {
     &:after {
       content: "%";
       margin-left: .2em;
@@ -280,13 +288,12 @@ table.budget {
     transition: all @transition-speed;
   }
   .new {
-    padding: 0;
+    padding: (1em / .6em) 0 1em 20%;
     font-size: .6em;
-    text-align: center;
     text-transform: uppercase;
     border: none;
     a {
-      display: block;
+      .button;
       padding: .5em 1%;
       transition: color @transition-speed;
       &:hover {

@@ -22,6 +22,10 @@ object Budget {
     SQL("SELECT * FROM budgets").as(budgetParser *)
   }
 
+  def withoutCategory(): List[Budget] = DB.withConnection { implicit connection =>
+    SQL("SELECT * FROM budgets WHERE category_id = NULL").as(budgetParser *)
+  }
+
   def findById(id: Long): Option[Budget] = DB.withConnection { implicit connection =>
     SQL("SELECT * FROM budgets WHERE id = {id}").on(
       'id -> id

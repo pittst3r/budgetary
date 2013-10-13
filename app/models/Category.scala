@@ -32,6 +32,13 @@ object Category {
     ).as(categoryParser.singleOpt)
   }
 
+  def selectOptionSeq(): Seq[(String, String)] = {
+    val categories = Category.all()
+    categories.foldLeft(Seq[(String, String)]()) { (z, cur) =>
+      z :+ (cur.id.get.toString(), cur.name)
+    }
+  }
+
   def create(category: Category) {
     DB.withConnection { implicit connection =>
       SQL("INSERT INTO categories (name) VALUES ({name})").on(

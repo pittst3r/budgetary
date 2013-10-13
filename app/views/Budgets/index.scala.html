@@ -1,4 +1,4 @@
-@(budgets: List[Budget], budgetTotal: Double)
+@(categories: List[Category], budgetsWithoutCategory: List[Budget], budgetTotal: Double)
 
 @import models.Budget._
 
@@ -13,19 +13,40 @@
       </tr>
     </thead>
     <tbody>
-      @for(b <- budgets) {
-      <tr>
-        <td class="name">
-          @b.name
-          <a href="@routes.Budgets.editBudget(b.id.get)" class="edit button">edit</a>
-          <a href="@routes.Budgets.index" class="delete button" data-id="@b.id.get">delete</a>
-        </td>
-        <td class="amount">@amountInCurrency(b.amount)</td>
-        <td class="proportion">@("%1.0f".format(b.amount / budgetTotal * 100))</td>
-      </tr>
+      @for(c <- categories) {
+        <tr>
+          <td class="category" colspan="3">@c.name</td>
+        </tr>
+        @for(b <- Category.budgets(c.id.get)) {
+          <tr>
+            <td class="name">
+              @b.name
+              <a href="@routes.Budgets.editBudget(b.id.get)" class="edit button">edit</a>
+              <a href="@routes.Budgets.index" class="delete button" data-id="@b.id.get">delete</a>
+            </td>
+            <td class="amount">@amountInCurrency(b.amount)</td>
+            <td class="proportion">@("%1.0f".format(b.amount / budgetTotal * 100))</td>
+          </tr>
+        }
+      }
+      @if(budgetsWithoutCategory.length > 0) {
+        <tr>
+          <td class="category" colspan="3">Uncategorized</td>
+        </tr>
+        @for(b <- budgetsWithoutCategory) {
+          <tr>
+            <td class="name">
+              @b.name
+              <a href="@routes.Budgets.editBudget(b.id.get)" class="edit button">edit</a>
+              <a href="@routes.Budgets.index" class="delete button" data-id="@b.id.get">delete</a>
+            </td>
+            <td class="amount">@amountInCurrency(b.amount)</td>
+            <td class="proportion">@("%1.0f".format(b.amount / budgetTotal * 100))</td>
+          </tr>
+        }
       }
       <tr>
-        <td class="new" colspan="4"><a href="@routes.Budgets.newBudget">New Budget</a></td>
+        <td class="new" colspan="4"><a href="@routes.Budgets.newBudget">New Budget</a> <a href="@routes.Categories.newCategory">New Category</a></td>
       </tr>
     </tbody>
     <tfoot>

@@ -4,8 +4,7 @@ import play.api._
 import play.api.mvc._
 import play.api.data._
 import play.api.data.Forms._
-import play.api.data.format.Formats._
-import models.Budget
+import models.{Category, Budget}
 import anorm.{Pk, NotAssigned}
 import play.api.data.format.Formats._
 
@@ -22,18 +21,20 @@ object Budgets extends Controller {
 
   def index = Action {
     val budgets = Budget.all()
-    Ok(views.html.Budgets.index(budgets, totalOfBudgets(budgets)))
+    Ok(views.html.Budgets.index(Category.all(), Budget.withoutCategory(), totalOfBudgets(budgets)))
   }
 
   def newBudget = Action {
-    Ok(views.html.Budgets.newBudget(budgetForm))
+    val categoryOptions = Category.selectOptionSeq()
+    Ok(views.html.Budgets.newBudget(budgetForm, categoryOptions))
   }
 
   def createBudget = Action { implicit request =>
 
     budgetForm.bindFromRequest.fold(
       errors => {
-        BadRequest(views.html.Budgets.newBudget(errors))
+        val categoryOptions = Category.selectOptionSeq()
+        BadRequest(views.html.Budgets.newBudget(errors, categoryOptions))
       },
       budget => {
         Budget.create(budget)
