@@ -1,4 +1,4 @@
-@(budget: Budget, budgetForm: Form[Budget])
+@(budget: Budget, budgetForm: Form[Budget], categoryOptions: Seq[(String, String)])
 
 @import helper._
 @import FormHelpers._
@@ -12,6 +12,8 @@
     <h2>Edit Budget</h2>
 
     @form(routes.Budgets.updateBudget(budget.id.get)) {
+
+      @select(budgetForm("category_id"), args = '_label -> "Category", options = categoryOptions)
 
       @inputText(budgetForm("name"))
 

@@ -46,16 +46,18 @@ object Budgets extends Controller {
 
   def editBudget(id: Long) = Action {
     val budget = Budget.findById(id).get
-    Ok(views.html.Budgets.editBudget(budget, budgetForm.fill(budget)))
+    val categoryOptions = Category.selectOptionSeq()
+    Ok(views.html.Budgets.editBudget(budget, budgetForm.fill(budget), categoryOptions))
   }
 
   def updateBudget(id: Long) = Action { implicit request =>
 
     val budget = Budget.findById(id).get
+    val categoryOptions = Category.selectOptionSeq()
 
     budgetForm.bindFromRequest.fold(
       errors => {
-        BadRequest(views.html.Budgets.editBudget(budget, errors))
+        BadRequest(views.html.Budgets.editBudget(budget, errors, categoryOptions))
       },
       budget => {
         Budget.update(id, budget)
