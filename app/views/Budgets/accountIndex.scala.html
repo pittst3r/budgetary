@@ -1,0 +1,47 @@
+@(categories: List[Category])(implicit token: String)
+
+@import models.Budget._
+
+@main {
+
+  <div id="new">
+    <a href="@routes.Budgets.newBudget(token)">New Budget</a>
+    <a href="@routes.Categories.newCategory(token)">New Category</a>
+  </div>
+
+  <table class="budget">
+    <thead>
+      <tr>
+        <th class="name">Name</th>
+        <th class="amount">Amount</th>
+        <th class="proportion">Proportion</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for(c <- categories) {
+        <tr>
+          <td class="category" colspan="3">@c.name</td>
+        </tr>
+        @for(b <- Category.budgets(c.id.get)) {
+          <tr>
+            <td class="name">
+              @b.name
+              <a href="@routes.Budgets.editBudget(token, b.id.get)" class="edit button">edit</a>
+              <a href="@routes.Budgets.accountIndex(token)" class="delete button" data-id="@b.id.get">delete</a>
+            </td>
+            <td class="amount">@amountInCurrency(b.amount)</td>
+            <td class="proportion"></td>
+          </tr>
+        }
+      }
+    </tbody>
+    <tfoot>
+      <tr>
+        <td class="total">Total</td>
+        <td class="amount"></td>
+        <td class="proportion">100</td>
+      </tr>
+    </tfoot>
+  </table>
+
+}

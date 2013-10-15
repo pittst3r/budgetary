@@ -8,12 +8,15 @@ GET     /                           controllers.Application.index
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
-GET     /budgets                    controllers.Budgets.index
-GET     /budgets/new                controllers.Budgets.newBudget
-POST    /budgets/create             controllers.Budgets.createBudget
-GET     /budgets/:id/edit           controllers.Budgets.editBudget(id: Long)
-POST    /budgets/:id                controllers.Budgets.updateBudget(id: Long)
-DELETE  /budgets/:id                controllers.Budgets.destroyBudget(id: Long)
+GET     /accounts/new               controllers.Accounts.newAccount
+POST    /accounts/create            controllers.Accounts.createAccount
 
-GET     /categories/new             controllers.Categories.newCategory
-POST    /categories/create          controllers.Categories.createCategory
+GET     /:token/budgets             controllers.Budgets.accountIndex(token: String)
+GET     /:token/budgets/new         controllers.Budgets.newBudget(token: String)
+POST    /:token/budgets/create      controllers.Budgets.createBudget(token: String)
+GET     /:token/budgets/:id/edit    controllers.Budgets.editBudget(token: String, id: Long)
+POST    /:token/budgets/:id         controllers.Budgets.updateBudget(token: String, id: Long)
+DELETE  /:token/budgets/:id         controllers.Budgets.destroyBudget(token: String, id: Long)
+
+GET     /:token/categories/new      controllers.Categories.newCategory(token: String)
+POST    /:token/categories/create   controllers.Categories.createCategory(token: String)

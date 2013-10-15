@@ -8,7 +8,7 @@ object Application extends Controller {
   implicit val title = "Budgetary"
 
   def index = Action {
-    Redirect(routes.Budgets.index)
+    Redirect(routes.Accounts.newAccount)
   }
 
 }

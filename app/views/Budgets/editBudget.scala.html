@@ -1,17 +1,17 @@
-@(budget: Budget, budgetForm: Form[Budget], categoryOptions: Seq[(String, String)])
+@(budget: Budget, budgetForm: Form[Budget], categoryOptions: Seq[(String, String)])(implicit token: String)
 
 @import helper._
 @import FormHelpers._
 
 @implicitFieldConstructor = @{ FieldConstructor(myFieldConstructor.f) }
 
-@main() {
+@main {
 
   <section class="content">
 
     <h2>Edit Budget</h2>
 
-    @form(routes.Budgets.updateBudget(budget.id.get)) {
+    @form(routes.Budgets.updateBudget("asdf", budget.id.get)) {
 
       @select(budgetForm("category_id"), args = '_label -> "Category", options = categoryOptions)
 

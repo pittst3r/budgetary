@@ -1,17 +1,17 @@
-@(categoryForm: Form[Category])
+@(categoryForm: Form[Category])(implicit token: String)
 
 @import helper._
 @import FormHelpers._
 
 @implicitFieldConstructor = @{ FieldConstructor(myFieldConstructor.f) }
 
-@main() {
+@main {
 
 <section class="content">
 
   <h2>New Category</h2>
 
-  @form(routes.Categories.createCategory) {
+  @form(routes.Categories.createCategory(token)) {
 
     @inputText(categoryForm("name"))
 

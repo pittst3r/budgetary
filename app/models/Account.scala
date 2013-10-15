@@ -37,10 +37,10 @@ object Account {
     ).as(accountParser.singleOpt)
   }
 
-  def create {
+  def create(account: Account) {
     DB.withConnection { implicit connection =>
       SQL("INSERT INTO accounts (token) VALUES ({token})").on(
-        'token -> Account.generateToken
+        'token -> account.token
       ).executeUpdate()
     }
   }

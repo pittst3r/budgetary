@@ -16,11 +16,11 @@ object Categories extends Controller {
     )(Category.apply)(Category.unapply)
   )
 
-  def newCategory = Action {
+  def newCategory(implicit token: String) = Action {
     Ok(views.html.Categories.newCategory(categoryForm))
   }
 
-  def createCategory = Action { implicit request =>
+  def createCategory(implicit token: String) = Action { implicit request =>
 
     categoryForm.bindFromRequest.fold(
       errors => {
@@ -28,13 +28,13 @@ object Categories extends Controller {
       },
       category => {
         Category.create(category)
-        Redirect(routes.Budgets.index)
+        Redirect(routes.Budgets.accountIndex(token))
       }
     )
 
   }
 
-  def destroyCategory(id: Long) = Action { implicit request =>
+  def destroyCategory(token: String, id: Long) = Action { implicit request =>
 
     Category.destroy(id) match {
       case None => BadRequest

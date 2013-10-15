@@ -15,45 +15,44 @@ object Budgets extends Controller {
       "id" -> ignored(NotAssigned: Pk[Long]),
       "name" -> nonEmptyText,
       "amount" -> of[Double],
-      "category_id" -> optional[Long](of[Long])
+      "category_id" -> optional(of[Long])
     )(Budget.apply)(Budget.unapply)
   )
 
-  def index = Action {
-    val budgets = Budget.all()
-    Ok(views.html.Budgets.index(Category.all(), Budget.withoutCategory(), totalOfBudgets(budgets)))
+  def accountIndex(implicit token: String) = Action {
+    Ok(views.html.Budgets.accountIndex(Category.allInAccount))
   }
 
-  def newBudget = Action {
-    val categoryOptions = Category.selectOptionSeq()
+  def newBudget(implicit token: String) = Action {
+    val categoryOptions = Category.selectOptionSeq
     Ok(views.html.Budgets.newBudget(budgetForm, categoryOptions))
   }
 
-  def createBudget = Action { implicit request =>
+  def createBudget(implicit token: String) = Action { implicit request =>
 
     budgetForm.bindFromRequest.fold(
       errors => {
-        val categoryOptions = Category.selectOptionSeq()
+        val categoryOptions = Category.selectOptionSeq
         BadRequest(views.html.Budgets.newBudget(errors, categoryOptions))
       },
       budget => {
         Budget.create(budget)
-        Redirect(routes.Budgets.index)
+        Redirect(routes.Budgets.accountIndex(token))
       }
     )
 
   }
 
-  def editBudget(id: Long) = Action {
+  def editBudget(implicit token: String, id: Long) = Action {
     val budget = Budget.findById(id).get
-    val categoryOptions = Category.selectOptionSeq()
+    val categoryOptions = Category.selectOptionSeq
     Ok(views.html.Budgets.editBudget(budget, budgetForm.fill(budget), categoryOptions))
   }
 
-  def updateBudget(id: Long) = Action { implicit request =>
+  def updateBudget(implicit token: String, id: Long) = Action { implicit request =>
 
     val budget = Budget.findById(id).get
-    val categoryOptions = Category.selectOptionSeq()
+    val categoryOptions = Category.selectOptionSeq
 
     budgetForm.bindFromRequest.fold(
       errors => {
@@ -61,13 +60,13 @@ object Budgets extends Controller {
       },
       budget => {
         Budget.update(id, budget)
-        Redirect(routes.Budgets.index)
+        Redirect(routes.Budgets.accountIndex(token))
       }
     )
 
   }
 
-  def destroyBudget(id: Long) = Action { implicit request =>
+  def destroyBudget(implicit token: String, id: Long) = Action { implicit request =>
 
     Budget.destroy(id) match {
       case None => BadRequest

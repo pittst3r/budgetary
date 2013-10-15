@@ -20,6 +20,13 @@ object Category {
     SQL("SELECT * FROM categories").as(categoryParser *)
   }
 
+  def allInAccount(implicit token: String): List[Category] = DB.withConnection { implicit connection =>
+    val account = Account.findByToken(token)
+    SQL("SELECT * FROM categories WHERE account_id = {accountId}").on(
+      'accountId -> account.get.id.get
+    ).as(categoryParser *)
+  }
+
   def budgets(categoryId: Long): List[Budget] = DB.withConnection { implicit connection =>
     SQL("SELECT * FROM budgets WHERE category_id = {categoryId}").on(
       'categoryId -> categoryId
@@ -32,17 +39,19 @@ object Category {
     ).as(categoryParser.singleOpt)
   }
 
-  def selectOptionSeq(): Seq[(String, String)] = {
-    val categories = Category.all()
+  def selectOptionSeq(implicit token: String): Seq[(String, String)] = {
+    val categories = Category.allInAccount
     categories.foldLeft(Seq[(String, String)]()) { (z, cur) =>
       z :+ (cur.id.get.toString(), cur.name)
     }
   }
 
-  def create(category: Category) {
+  def create(category: Category)(implicit token: String) {
+    val account = Account.findByToken(token)
     DB.withConnection { implicit connection =>
-      SQL("INSERT INTO categories (name) VALUES ({name})").on(
-        'name -> category.name
+      SQL("INSERT INTO categories (name, account_id) VALUES ({name}, {accountId})").on(
+        'name -> category.name,
+        'accountId -> account.get.id.get
       ).executeUpdate()
     }
   }
