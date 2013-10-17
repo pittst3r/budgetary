@@ -5,8 +5,8 @@
 @main {
 
   <div id="new">
-    <a href="@routes.Budgets.newBudget(token)">New Budget</a>
-    <a href="@routes.Categories.newCategory(token)">New Category</a>
+    <a href="@routes.Budgets.newBudget(token)" class="button grey">New Budget</a>
+    <a href="@routes.Categories.newCategory(token)" class="button grey">New Category</a>
   </div>
 
   <table class="budget">
@@ -26,8 +26,8 @@
           <tr>
             <td class="name">
               @b.name
-              <a href="@routes.Budgets.editBudget(token, b.id.get)" class="edit button">edit</a>
-              <a href="@routes.Budgets.accountIndex(token)" class="delete button" data-id="@b.id.get">delete</a>
+              <a href="@routes.Budgets.editBudget(token, b.id.get)" class="edit button grey">edit</a>
+              <a href="@routes.Budgets.accountIndex(token)" class="delete button grey" data-id="@b.id.get">delete</a>
             </td>
             <td class="amount">@amountInCurrency(b.amount)</td>
             <td class="proportion"></td>

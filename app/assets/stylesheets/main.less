@@ -62,6 +62,7 @@ abbr {
 /*/\/\
   0.1. Color aliases
 \/\/*/
+@less-medium-grey: #888;
 @medium-grey: #eee;
 @light-grey: #fafafa;
 @white-grey: lighten(@light-grey, 4%);
@@ -93,7 +94,7 @@ abbr {
   0.4. Dimensions
 \/\/*/
 
-@transition-speed: 0.2s;
+@transition-speed: 0.4s;
 
 /*/\/\
   0.5. Mixins
@@ -238,10 +239,6 @@ header {
   a {
     .button;
     padding: .5em 1%;
-    transition: color @transition-speed;
-    &:hover {
-      color: @red;
-    }
   }
 }
 
@@ -338,7 +335,23 @@ section.content {
   display: inline-block;
   padding: .3em;
   text-transform: uppercase;
-  background: @primary-color;
+  transition: background @transition-speed;
+  &.grey {
+    color: @less-medium-grey;
+    background: @medium-grey;
+    &:hover {
+      color: @less-medium-grey;
+      background: darken(@medium-grey, 5%);
+    }
+  }
+  &.blue {
+    color: @medium-blue;
+    background: @light-blue;
+    &:hover {
+      color: @medium-blue;
+      background: darken(@light-blue, 5%);
+    }
+  }
 }
 
 
