@@ -163,6 +163,10 @@ select {
   color: @copy;
   border-radius: 0;
   -webkit-appearance: none;
+  &[readonly] {
+    opacity: .7;
+    cursor: not-allowed;
+  }
 }
 
 input[type="text"],

@@ -13,18 +13,22 @@ object Accounts extends Controller {
   val accountForm = Form(
     mapping(
       "id" -> ignored(NotAssigned: Pk[Long]),
-      "token" -> text
+      "token" -> nonEmptyText,
+      "monthly_income" -> of[Double]
     )(Account.apply)(Account.unapply)
   )
 
   def newAccount = Action {
-    Ok(views.html.Accounts.newAccount(accountForm)(Account.generateToken))
+    val token: String = Account.generateToken
+    Ok(views.html.Accounts.newAccount(accountForm.bind(Map("token" -> token)))(token))
   }
 
   def createAccount = Action { implicit request =>
 
     accountForm.bindFromRequest.fold(
-      errors => BadRequest,
+      errors => {
+        BadRequest(views.html.Accounts.newAccount(errors)(errors.apply("token").value.getOrElse("")))
+      },
       account => {
         Account.create(account)
         Redirect(routes.Budgets.accountIndex(account.token))

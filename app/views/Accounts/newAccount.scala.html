@@ -1,6 +1,9 @@
 @(accountForm: Form[Account])(implicit token: String)
 
 @import helper._
+@import FormHelpers._
+
+@implicitFieldConstructor = @{ FieldConstructor(myFieldConstructor.f) }
 
 @main {
 
@@ -10,10 +13,10 @@
 
   @form(routes.Accounts.createAccount) {
 
-    <h3>Token</h3>
-    <p>@token</p>
+    @inputText(accountForm("token"), 'readonly -> "readonly")
 
-    <input type="hidden" name="token" value="@token" />
+    @inputText(accountForm("monthly_income"), '_label -> "Monthly Income")
+
     <input type="submit" value="Create Account" class="button blue" />
 
   }

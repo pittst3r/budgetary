@@ -6,14 +6,15 @@ import play.api.db._
 import play.api.Play.current
 import scala.util.Random
 
-case class Account(id: Pk[Long], token: String)
+case class Account(id: Pk[Long], token: String, monthlyIncome: Double)
 
 object Account {
 
   val accountParser = {
      get[Pk[Long]]("id") ~
-     get[String]("token") map {
-      case id~token => Account(id, token)
+     get[String]("token") ~
+     get[Double]("monthly_income") map {
+      case id~token~monthlyIncome => Account(id, token, monthlyIncome)
     }
   }
 
@@ -39,8 +40,9 @@ object Account {
 
   def create(account: Account) {
     DB.withConnection { implicit connection =>
-      SQL("INSERT INTO accounts (token) VALUES ({token})").on(
-        'token -> account.token
+      SQL("INSERT INTO accounts (token, monthly_income) VALUES ({token}, {monthlyIncome})").on(
+        'token -> account.token,
+        'monthlyIncome -> account.monthlyIncome
       ).executeUpdate()
     }
   }
