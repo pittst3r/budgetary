@@ -5,7 +5,7 @@
 
 @main {
 
-  <div id="income">Monthly income: $@Numbers.amountInCurrency(monthlyIncome)</div>
+  <p id="income">Monthly income: $@Numbers.amountInCurrency(monthlyIncome)</p>
 
   <div id="new">
     <a href="@routes.Budgets.newBudget(token)" class="button grey">New Budget</a>
@@ -23,7 +23,10 @@
     <tbody>
       @for(c <- categories) {
         <tr>
-          <td class="category" colspan="3">@c.name</td>
+          <td class="category" colspan="3">
+            @c.name
+            <a href="@routes.Categories.editCategory(token, c.id.get)" class="edit button grey">edit</a>
+          </td>
         </tr>
         @for(b <- Category.budgets(c.id.get)) {
           <tr>

@@ -1,4 +1,4 @@
-@(categoryForm: Form[Category])(implicit token: String)
+@(category: Category, categoryForm: Form[Category])(implicit token: String)
 
 @import helper._
 @import FormHelpers._
@@ -9,15 +9,15 @@
 
 <section class="content">
 
-  <h2>New Category</h2>
+  <h2>Edit Category</h2>
 
-  @form(routes.Categories.createCategory(token)) {
+  @form(routes.Categories.updateCategory(token, category.id.get)) {
 
     @inputText(categoryForm("name"))
 
     @inputText(categoryForm("accountId"))
 
-    <input type="submit" value="Create Category" class="button blue" />
+    <input type="submit" value="Update Category" class="button blue" />
 
   }
 

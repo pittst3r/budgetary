@@ -5,14 +5,15 @@ import anorm.SqlParser._
 import play.api.db._
 import play.api.Play.current
 
-case class Category(id: Pk[Long], name: String)
+case class Category(id: Pk[Long], name: String, accountId: Long)
 
 object Category {
 
   val categoryParser = {
     get[Pk[Long]]("id") ~
-    get[String]("name") map {
-      case id~name => Category(id, name)
+    get[String]("name") ~
+    get[Long]("account_id") map {
+      case id~name~accountId => Category(id, name, accountId)
     }
   }
 

@@ -15,7 +15,7 @@ object Budgets extends Controller {
       "id" -> ignored(NotAssigned: Pk[Long]),
       "name" -> nonEmptyText,
       "amount" -> of[Double],
-      "category_id" -> optional(of[Long])
+      "category_id" -> of[Long]
     )(Budget.apply)(Budget.unapply)
   )
 
