@@ -22,6 +22,15 @@ object Budget {
     SQL("SELECT * FROM budgets").as(budgetParser *)
   }
 
+  def allInAccount(token: String): List[Budget] = DB.withConnection { implicit connection =>
+    SQL("SELECT budgets.* FROM budgets " +
+          "INNER JOIN categories ON budgets.category_id = categories.id " +
+          "INNER JOIN accounts ON categories.account_id = accounts.id " +
+          "WHERE accounts.token = {token}").on(
+      'token -> token
+    ).as(budgetParser *)
+  }
+
   def withoutCategory(): List[Budget] = DB.withConnection { implicit connection =>
     SQL("SELECT * FROM budgets WHERE category_id = NULL").as(budgetParser *)
   }
@@ -62,7 +71,5 @@ object Budget {
       case 1 => budget
     }
   }
-
-  def amountInCurrency(amount: Double): String = "%.2f".format(amount)
 
 }

@@ -4,7 +4,7 @@ import play.api._
 import play.api.mvc._
 import play.api.data._
 import play.api.data.Forms._
-import models.{Category, Budget}
+import models._
 import anorm.{Pk, NotAssigned}
 import play.api.data.format.Formats._
 
@@ -20,7 +20,12 @@ object Budgets extends Controller {
   )
 
   def accountIndex(implicit token: String) = Action {
-    Ok(views.html.Budgets.accountIndex(Category.allInAccount))
+    val categories = Category.allInAccount
+    val monthlyIncome = Account.findByToken(token).get.monthlyIncome
+    val budgetTotal = Budget.allInAccount(token).foldLeft(0: Double) { (z, b) =>
+      z + b.amount
+    }
+    Ok(views.html.Budgets.accountIndex(categories, monthlyIncome, budgetTotal))
   }
 
   def newBudget(implicit token: String) = Action {

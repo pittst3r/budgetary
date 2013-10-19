@@ -127,6 +127,11 @@ legend, label {
   font-weight: normal;
 }
 
+p,
+td {
+  letter-spacing: 0;
+}
+
 a {
   color: @copy;
   text-decoration: none;
@@ -234,6 +239,14 @@ header {
   }
 }
 
+#income {
+  float: left;
+  margin: 0 0 0 20%;
+  padding: .2em 0;
+  font-size: .8em;
+  color: @less-medium-grey;
+}
+
 #new {
   margin: 2em 20%;
   font-size: .6em;
@@ -241,7 +254,6 @@ header {
   text-align: right;
   border: none;
   a {
-    .button;
     padding: .5em 1%;
   }
 }
@@ -309,6 +321,11 @@ table.budget {
     &:after {
       content: "%";
       margin-left: .2em;
+    }
+  }
+  th.proportion {
+    &:after {
+      display: none;
     }
   }
   a.edit,
