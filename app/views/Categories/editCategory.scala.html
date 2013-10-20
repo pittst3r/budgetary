@@ -1,4 +1,4 @@
-@(category: Category, categoryForm: Form[Category])(implicit token: String)
+@(category: Category, categoryForm: Form[CategoryWithoutAccount])(implicit token: String)
 
 @import helper._
 @import FormHelpers._
@@ -14,8 +14,6 @@
   @form(routes.Categories.updateCategory(token, category.id.get)) {
 
     @inputText(categoryForm("name"))
-
-    @inputText(categoryForm("accountId"))
 
     <input type="submit" value="Update Category" class="button blue" />
 

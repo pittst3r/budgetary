@@ -47,4 +47,8 @@ object Account {
     }
   }
 
+  def getIdFromToken(token: String): Long = {
+    Account.findByToken(token).get.id.get
+  }
+
 }

@@ -5,7 +5,17 @@ import anorm.SqlParser._
 import play.api.db._
 import play.api.Play.current
 
-case class Category(id: Pk[Long], name: String, accountId: Long)
+case class Category(id: Pk[Long], name: String, accountId: Long) {
+  def withoutAccount: CategoryWithoutAccount = {
+    CategoryWithoutAccount(id, name)
+  }
+}
+
+case class CategoryWithoutAccount(id: Pk[Long], name: String) {
+  def toCategory(accountId: Long): Category = {
+    Category(id, name, accountId)
+  }
+}
 
 object Category {
 
@@ -34,10 +44,12 @@ object Category {
     ).as(Budget.budgetParser *)
   }
 
-  def findById(id: Long): Option[Category] = DB.withConnection { implicit connection =>
-    SQL("SELECT * FROM categories WHERE id = {id}").on(
-      'id -> id
-    ).as(categoryParser.singleOpt)
+  def findById(id: Long): Option[Category] = {
+    DB.withConnection { implicit connection =>
+      SQL("SELECT * FROM categories WHERE id = {id}").on(
+        'id -> id
+      ).as(categoryParser.singleOpt)
+    }
   }
 
   def selectOptionSeq(implicit token: String): Seq[(String, String)] = {
@@ -57,11 +69,11 @@ object Category {
     }
   }
 
-  def update(id: Long, category: Category) {
+  def update(id: Long, name: String) {
     DB.withConnection { implicit connection =>
       SQL("UPDATE categories SET name = {name} WHERE id = {id}").on(
         'id -> id,
-        'name -> category.name
+        'name -> name
       ).executeUpdate()
     }
   }
