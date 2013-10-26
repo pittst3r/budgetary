@@ -18,6 +18,10 @@ object Accounts extends Controller {
     )(Account.apply)(Account.unapply)
   )
 
+  def showAccount(token: String) = Action { implicit request =>
+    Redirect(routes.Budgets.accountIndex(token))
+  }
+
   def newAccount = Action {
     val token: String = Account.generateToken
     Ok(views.html.Accounts.newAccount(accountForm.bind(Map("token" -> token)))(token))
@@ -31,7 +35,7 @@ object Accounts extends Controller {
       },
       account => {
         Account.create(account)
-        Redirect(routes.Budgets.accountIndex(account.token))
+        Redirect(routes.Accounts.showAccount(account.token))
       }
     )
 

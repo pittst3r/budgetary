@@ -10,6 +10,7 @@ GET     /assets/*file                   controllers.Assets.at(path="/public", fi
 
 GET     /accounts/new                   controllers.Accounts.newAccount
 POST    /accounts/create                controllers.Accounts.createAccount
+GET     /:token                         controllers.Accounts.showAccount(token: String)
 
 GET     /:token/budgets                 controllers.Budgets.accountIndex(token: String)
 GET     /:token/budgets/new             controllers.Budgets.newBudget(token: String)
