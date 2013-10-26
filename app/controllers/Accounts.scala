@@ -19,7 +19,9 @@ object Accounts extends Controller {
   )
 
   def showAccount(token: String) = Action { implicit request =>
-    Redirect(routes.Budgets.accountIndex(token))
+    Account.findByTokenAndDo(token) { account =>
+      Redirect(routes.Budgets.accountIndex(account.token))
+    }
   }
 
   def newAccount = Action {

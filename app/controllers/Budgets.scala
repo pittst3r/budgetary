@@ -20,17 +20,21 @@ object Budgets extends Controller {
   )
 
   def accountIndex(implicit token: String) = Action {
-    val categories = Category.allInAccount
-    val monthlyIncome = Account.findByToken(token).get.monthlyIncome
-    val budgetTotal = Budget.allInAccount(token).foldLeft(0: Double) { (z, b) =>
-      z + b.amount
+    Account.findByTokenAndDo(token) { account =>
+      val categories = Category.allInAccount
+      val monthlyIncome = account.monthlyIncome
+      val budgetTotal = Budget.allInAccount(token).foldLeft(0: Double) { (z, b) =>
+        z + b.amount
+      }
+      Ok(views.html.Budgets.accountIndex(categories, monthlyIncome, budgetTotal))
     }
-    Ok(views.html.Budgets.accountIndex(categories, monthlyIncome, budgetTotal))
   }
 
   def newBudget(implicit token: String) = Action {
-    val categoryOptions = Category.selectOptionSeq
-    Ok(views.html.Budgets.newBudget(budgetForm, categoryOptions))
+    Account.findByTokenAndDo(token) { account =>
+      val categoryOptions = Category.selectOptionSeq
+      Ok(views.html.Budgets.newBudget(budgetForm, categoryOptions))
+    }
   }
 
   def createBudget(implicit token: String) = Action { implicit request =>

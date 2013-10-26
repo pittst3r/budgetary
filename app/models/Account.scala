@@ -5,6 +5,7 @@ import anorm.SqlParser._
 import play.api.db._
 import play.api.Play.current
 import scala.util.Random
+import controllers.routes
 
 case class Account(id: Pk[Long], token: String, monthlyIncome: Double)
 
@@ -36,6 +37,13 @@ object Account {
     SQL("SELECT * FROM accounts WHERE token = {token}").on(
       'token -> token
     ).as(accountParser.singleOpt)
+  }
+
+  def findByTokenAndDo(token: String)(block: Account => play.api.mvc.Result): play.api.mvc.Result = {
+    findByToken(token) match {
+      case None => play.api.mvc.Results.Redirect(routes.Accounts.newAccount)
+      case Some(m) => block(m)
+    }
   }
 
   def create(account: Account) {
