@@ -1,0 +1,39 @@
+@(allocations: List[Allocation])(implicit token: String)
+
+@import Helpers._
+
+@main {
+
+<div id="top-controls">
+  <div id="buttons">
+    <a href="@routes.Allocations.newAllocation(token)">New Allocation</a>
+  </div>
+</div>
+
+<table class="allocation">
+  <thead>
+  <tr>
+    <th class="name">Name</th>
+    <th class="amount">Amount</th>
+  </tr>
+  </thead>
+  <tbody>
+    @for(a <- allocations) {
+    <tr>
+      <td class="name">
+        @a.name
+        <a href="@routes.Allocations.editAllocation(token, a.id.get)" class="edit button grey">edit</a>
+      </td>
+      <td class="amount">@Numbers.amountInCurrency(a.amount)</td>
+    </tr>
+    }
+  </tbody>
+  <tfoot>
+  <tr>
+    <td class="total">Total</td>
+    <td class="amount"></td>
+  </tr>
+  </tfoot>
+</table>
+
+}

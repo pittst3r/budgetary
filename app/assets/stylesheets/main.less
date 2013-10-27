@@ -360,6 +360,78 @@ table.budget {
   }
 }
 
+table.allocation {
+  width: 100%;
+  border-collapse: collapse;
+  cursor: default;
+  td, th {
+    padding: .5em .5em;
+    font-size: .8em;
+    border: 2px solid @primary-color;
+    border-width: 2px 0;
+    .button {
+      letter-spacing: .2em;
+    }
+  }
+  thead {
+    th {
+      font-size: .6em;
+      font-weight: normal;
+      text-transform: uppercase;
+      text-align: left;
+      &.amount {
+        &:before {
+          content: "";
+        }
+      }
+    }
+  }
+  tbody {
+    tr {
+      &:hover {
+        td {
+          a.edit,
+          a.delete {
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+  tfoot {
+    &:before {
+      content: "";
+      display: block;
+      height: 1.5em;
+    }
+  }
+  .name {
+    width: 70%;
+    padding-left: @column-margin;
+  }
+  .amount {
+    padding-right: @column-margin;
+    text-align: right;
+    &:before {
+      content: "$";
+      float: left;
+    }
+  }
+  a.edit,
+  a.delete {
+    position: relative;
+    top: -.1em;
+    left: 1em;
+    font-size: .6em;
+    opacity: 0;
+    transition: all @transition-speed;
+  }
+  .total {
+    text-transform: uppercase;
+    text-align: right;
+  }
+}
+
 section.content {
   margin: 0 @column-margin;
 }

@@ -23,3 +23,8 @@ GET     /:token/categories/new          controllers.Categories.newCategory(token
 POST    /:token/categories/create       controllers.Categories.createCategory(token: String)
 GET     /:token/categories/:id          controllers.Categories.editCategory(token: String, id: Long)
 POST    /:token/categories/:id          controllers.Categories.updateCategory(token: String, id: Long)
+
+GET     /:token/allocations             controllers.Allocations.accountIndex(token: String)
+GET     /:token/allocations/new         controllers.Allocations.newAllocation(token: String)
+POST    /:token/allocations/create      controllers.Allocations.createAllocation(token: String)
+GET     /:token/allocations/:id/edit    controllers.Allocations.editAllocation(token: String, id: Long)
