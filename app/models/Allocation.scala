@@ -7,7 +7,11 @@ import play.api.Play.current
 
 case class Allocation(id: Pk[Long], name: String, amount: Double, accountId: Long)
 
-case class AllocationWithoutAccount(id: Pk[Long], name: String, amount: Double)
+case class AllocationWithoutAccount(id: Pk[Long], name: String, amount: Double) {
+
+  def toAllocation(accountId: Long): Allocation = Allocation(id, name, amount, accountId)
+
+}
 
 object Allocation {
 
@@ -64,6 +68,19 @@ object Allocation {
     } match {
       case 0 => None
       case 1 => allocation
+    }
+  }
+
+  def accountTotal(accountId: Long): Double = {
+    allInAccount(accountId).foldLeft(0.toDouble) { (z, a) =>
+      z + a.amount
+    }
+  }
+
+  def accountTotal(token: String): Double = {
+    val accountId = Account.findByToken(token).get.id.get
+    allInAccount(accountId).foldLeft(0.toDouble) { (z, a) =>
+      z + a.amount
     }
   }
 

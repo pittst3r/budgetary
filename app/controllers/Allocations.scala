@@ -25,9 +25,23 @@ object Allocations extends Controller {
     }
   }
 
-  def newAllocation(implicit token: String) = TODO
+  def newAllocation(implicit token: String) = Action {
+    Ok(views.html.Allocations.newAllocation(allocationForm))
+  }
 
-  def createAllocation(implicit token: String) = TODO
+  def createAllocation(implicit token: String) = Action { implicit request =>
+
+    allocationForm.bindFromRequest.fold(
+      errors => {
+        BadRequest(views.html.Allocations.newAllocation(errors))
+      },
+      allocationWithoutAccount => {
+        Allocation.create(allocationWithoutAccount.toAllocation(Account.getIdFromToken(token)))
+        Redirect(routes.Allocations.accountIndex(token))
+      }
+    )
+
+  }
 
   def editAllocation(implicit token: String, id: Long) = TODO
 

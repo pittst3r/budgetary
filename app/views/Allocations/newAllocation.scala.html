@@ -1,0 +1,26 @@
+@(allocationForm: Form[AllocationWithoutAccount])(implicit token: String)
+
+@import helper._
+@import FormHelpers._
+
+@implicitFieldConstructor = @{ FieldConstructor(myFieldConstructor.f) }
+
+@main {
+
+<section class="content">
+
+  <h2>New Allocation</h2>
+
+  @form(routes.Allocations.createAllocation(token)) {
+
+  @inputText(allocationForm("name"))
+
+  @inputText(allocationForm("amount"), args = '_type -> "number")
+
+  <input type="submit" value="Create Allocation" class="button blue" />
+
+  }
+
+</section>
+
+}

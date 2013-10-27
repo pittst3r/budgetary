@@ -6,15 +6,15 @@ import play.api.db._
 import play.api.Play.current
 
 case class Category(id: Pk[Long], name: String, accountId: Long) {
-  def withoutAccount: CategoryWithoutAccount = {
-    CategoryWithoutAccount(id, name)
-  }
+
+  def withoutAccount: CategoryWithoutAccount = CategoryWithoutAccount(id, name)
+
 }
 
 case class CategoryWithoutAccount(id: Pk[Long], name: String) {
-  def toCategory(accountId: Long): Category = {
-    Category(id, name, accountId)
-  }
+
+  def toCategory(accountId: Long): Category = Category(id, name, accountId)
+
 }
 
 object Category {
