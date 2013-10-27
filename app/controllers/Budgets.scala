@@ -23,9 +23,7 @@ object Budgets extends Controller {
     Account.findByTokenAndDo(token) { account =>
       val categories = Category.allInAccount
       val monthlyIncome = account.monthlyIncome
-      val budgetTotal = Budget.allInAccount(token).foldLeft(0: Double) { (z, b) =>
-        z + b.amount
-      }
+      val budgetTotal = Budget.accountTotal(token)
       Ok(views.html.Budgets.accountIndex(categories, monthlyIncome, budgetTotal))
     }
   }

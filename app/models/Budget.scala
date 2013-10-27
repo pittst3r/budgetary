@@ -72,4 +72,10 @@ object Budget {
     }
   }
 
+  def accountTotal(token: String): Double = {
+    allInAccount(token).foldLeft(0.toDouble) { (z, a) =>
+      z + a.amount
+    }
+  }
+
 }
