@@ -5,11 +5,12 @@
 
 @main {
 
-  <p id="income">Monthly income: $@Numbers.amountInCurrency(monthlyIncome)</p>
-
-  <div id="new">
-    <a href="@routes.Budgets.newBudget(token)" class="button grey">New Budget</a>
-    <a href="@routes.Categories.newCategory(token)" class="button grey">New Category</a>
+  <div id="top-controls">
+    <p id="income">Monthly income: $@Numbers.amountInCurrency(monthlyIncome)</p>
+    <div id="buttons">
+      <a href="@routes.Budgets.newBudget(token)">New Budget</a>
+      <a href="@routes.Categories.newCategory(token)">New Category</a>
+    </div>
   </div>
 
   <table class="budget">
