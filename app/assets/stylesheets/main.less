@@ -96,7 +96,7 @@ abbr {
 
 @transition-speed: 0.4s;
 @border-radius: 4px;
-@column-margin: 15%;
+@column-margin: 30%;
 
 /*/\/\
   0.5. Mixins
@@ -116,6 +116,7 @@ abbr {
 \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/*/
 
 body {
+  padding-top: 3.5em;
   margin-bottom: 4em;
   font-family: @font-family-normal;
   font-size: 1.2em;
@@ -211,11 +212,15 @@ button {
 
 header {
   .clearfix;
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  width: 100%;
   margin: 0 0 2em;
   padding: 1em 2em;
   color: @dark-blue;
   text-transform: uppercase;
-  background: @medium-blue;
+  background: rgba(82, 97, 129, .9);
   h1 {
     float: left;
     margin-right: 2em;
@@ -322,11 +327,11 @@ table.budget {
     border-top: none;
   }
   .name {
-    width: 60%;
+    width: 50%;
     padding-left: @column-margin;
   }
   .amount {
-    width: 15%;
+    width: 12%;
     text-align: right;
     &:before {
       content: "$";
